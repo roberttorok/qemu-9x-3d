@@ -1,0 +1,26 @@
+REGEDIT4
+
+; Imported by E:\SETUP.BAT. Windows 98 for QEMU + SharedGL.
+
+; The PCI bus. Windows 98 Setup does not find it on QEMU. This adds it as a device that
+; needs its driver installed (ConfigFlags 0x20 = reinstall): at the next start Windows
+; installs it from its own MACHINE.INF, then finds the PCI devices on it.
+[HKEY_LOCAL_MACHINE\Enum\Root\*PNP0A03\0000]
+"ConfigFlags"=hex:20,00,00,00
+"HardwareID"="*PNP0A03"
+"DeviceDesc"="PCI bus"
+"Capabilities"=hex:14,00,00,00
+
+; Where Windows looks for drivers: its own INF folder plus C:\DRIVERS (vmdisp9x, SharedGL),
+; so it finds ours without asking.
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion]
+"DevicePath"="C:\\WINDOWS\\INF;C:\\DRIVERS"
+
+; Remove the "Standard Display Adapter (VGA)" that Windows Setup detects on a PC without a
+; PCI bus: it keeps the VGA ports, and the real (PCI) card then fails with Code 12.
+[-HKEY_LOCAL_MACHINE\Enum\Root\*PNP0900]
+
+; At each start until it is done, C:\DRIVERS\FINISH.EXE turns on DMA and True Color once
+; the drivers are in (guest/finish98.c).
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce]
+"QemuSetup"="C:\\DRIVERS\\FINISH.EXE"

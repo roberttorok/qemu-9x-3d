@@ -1,0 +1,26 @@
+# Downloaded and cloned in README.md step 1 (not ours)
+/qemu-*/
+/qemu-*.tar.xz
+/sharedgl/
+/openglide/
+/patcher9x-*.ima
+/vmdisp9x-*.zip
+/qemouse.zip
+/guest/vmdisp9x/
+/guest/qemouse/
+
+# Built by make
+/build-98/
+/build-98-linux/
+/guest.iso
+
+# Release ZIPs and downloads of prebuild.sh
+/dist/
+/.prebuild-cache/
+
+# The VM: disks, CD images, logs
+*.qcow2
+*.iso
+*.img
+*.ima
+/logs/
